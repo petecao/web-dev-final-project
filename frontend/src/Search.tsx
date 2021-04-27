@@ -16,7 +16,7 @@ const Search = () => {
             value={query}
             onChange={(e) => changeQuery(e.target.value)}
             />
-            <a href={`/stock/${query}`}><button>Go</button></a>
+            <button onClick={() => history.push(`/stock/${query}`)}>Go</button>
         </span>
         
     )

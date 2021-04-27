@@ -5,7 +5,7 @@
 - [x] Header Peter
 - [] User Dropdown Peter (Will do with Styling later on (Requires Bootstrap))
 - [x] Footer Peter
-- [] Search Bar Peter
+- [x] Search Bar Peter
 - [x] Login Peter
 - [] Main Page Dashboard Willen
 - [] Main Page Stocks Carousel Willen (Will do with Styling later on (Requires Bootstrap))
@@ -18,7 +18,7 @@
 
 ## Pages To Do
  - [] Home Page (Not Logged In) Willen
- - [] Login Peter
- - [] Logout Peter
+ - [x] Login Peter
+ - [x] Logout Peter
  - [] Stock Info Screen Willen
  - [] Stock User Screen Willen
