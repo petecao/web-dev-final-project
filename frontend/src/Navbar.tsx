@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import React from 'react';
 
 const Navbar = () => {
@@ -8,6 +9,7 @@ const Navbar = () => {
                 <li className="nav-item"><a href="/register">Register</a></li>
                 <li className="nav-item"><a href="/login">Login</a></li>
                 <li className="nav-item"><a href="/profile">Profile</a></li>
+                <li className="nav-item"><a href="/logout"><button onClick={() => firebase.auth().signOut()}>Sign Out</button></a></li>
             </ul>
         </div>
     )

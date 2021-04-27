@@ -51,7 +51,11 @@
   padding: 0;
 }
 
-li {
+li.nav-item {
   display: inline;
   padding: 10px;
+}
+
+a {
+  text-decoration: none;
 }

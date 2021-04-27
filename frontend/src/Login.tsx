@@ -1,10 +1,16 @@
 import React from 'react';
+import Authenticated from './Authenticated';
 
 const Login = () => {
     return(
         <div>
-            Login
+            <div>
+                Login
+            </div>
+            <Authenticated>
+            </Authenticated>
         </div>
+        
     )
 }
 
