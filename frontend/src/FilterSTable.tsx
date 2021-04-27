@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { StockInfo } from './StockInfo';
 import StockTable from './STable';
+import StockSum from './StockSum';
 
 type SearchProps = {
   readonly filterText: string;
@@ -47,13 +48,20 @@ const SearchBar = ({
 
 type TableProps = {
   readonly stocks: StockInfo[];
+  readonly callback: React.Dispatch<React.SetStateAction<StockInfo[]>>;
 };
 
-const FilterableStockTable = ({ stocks }: TableProps) => {
+const FilterableStockTable = ({ stocks, callback }: TableProps) => {
+  const [currstocks, setCurrstocks] = useState<StockInfo[]>(stocks);
   const [filterText, setFilterText] = useState('');
   const [favoriteOnly, setFavoriteOnly] = useState(false);
   const [loading, setLoading] = useState(false);
   const [descending, setDescending] = useState(false);
+
+  const changeStocks = (ss: StockInfo[]) => {
+    setCurrstocks(ss);
+    callback(ss);
+  }
 
   const handleFilterTextChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFilterText(e.target.value);
@@ -65,7 +73,7 @@ const FilterableStockTable = ({ stocks }: TableProps) => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => setLoading(false), 3000);
-  }, [favoriteOnly]);
+  }, [favoriteOnly, descending]);
 
   return loading ? (
     <div>loading</div>
@@ -79,11 +87,13 @@ const FilterableStockTable = ({ stocks }: TableProps) => {
         descending={descending}
         handleCheckBoxChange2={handleCheckBoxChange2}
       />
+      <StockSum stocks={currstocks} />
       <StockTable
-        stocks={stocks} // JSON API model
+        stocks={currstocks} // JSON API model
         filterText={filterText} // states passed as prop to SearchBar
         favoriteOnly={favoriteOnly} // states passed as prop to SearchBar
         descending={descending}
+        callback={changeStocks}
       />
     </div>
   );

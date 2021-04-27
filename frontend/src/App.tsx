@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import './App.css';
 import FilterableStockTable from './FilterSTable';
+import { StockInfo } from './StockInfo';
 const STOCKS = [
   {
     name: 'stock1',
@@ -29,10 +31,12 @@ const STOCKS = [
 
 function App() {
 
+  const [stocks, setStocks] = useState<StockInfo[]>(STOCKS);
+
 
   return (
     <div>
-      <FilterableStockTable stocks={STOCKS} />
+      <FilterableStockTable stocks={stocks} callback={setStocks} />
       <br />
 
     </div>

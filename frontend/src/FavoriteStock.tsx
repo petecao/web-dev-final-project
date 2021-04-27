@@ -3,7 +3,8 @@ import React from 'react';
 
 type Props = {
   readonly stock: StockInfo,
-  readonly callback: React.Dispatch<React.SetStateAction<StockInfo>>;
+  readonly callback: React.Dispatch<StockInfo>;
+  // readonly callback: React.Dispatch<React.SetStateAction<StockInfo>>;
 }
 
 const FavoriteStock = ({ stock, callback }: Props) => {
