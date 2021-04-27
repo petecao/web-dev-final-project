@@ -10,13 +10,15 @@ const Search = () => {
 
     return(
         <span>
+            <form onSubmit={() => history.push(`/stock/${query}`)}>
             <input 
             type="text"
             placeholder="Search"
             value={query}
             onChange={(e) => changeQuery(e.target.value)}
             />
-            <button onClick={() => history.push(`/stock/${query}`)}>Go</button>
+            <button type="submit">Go</button>
+            </form>
         </span>
         
     )

@@ -59,3 +59,7 @@ li.nav-item {
 a {
   text-decoration: none;
 }
+
+form {
+  display: inline;
+}
