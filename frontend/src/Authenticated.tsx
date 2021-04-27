@@ -12,14 +12,15 @@ type Props = {
     readonly children: React.ReactNode;
 }
 
+
 const Authenticated = ({children}: Props) => {
     const [user, setUser] = useState<firebase.User | null>(null);
 
     const onAuthStateChange = () => {
-        return firebase.auth().onAuthStateChanged((user) => {
-            setUser(user);
-        })
-    }
+    return firebase.auth().onAuthStateChanged((user) => {
+        setUser(user);
+    })
+}
 
     useEffect(() => onAuthStateChange(), [])
 
@@ -38,4 +39,6 @@ const Authenticated = ({children}: Props) => {
     );
 }
 
-export default Authenticated;
+
+
+export {Authenticated};

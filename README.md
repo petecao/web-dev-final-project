@@ -2,12 +2,11 @@
 
 ## Props To Do
 
-- [] Header Peter
+- [x] Header Peter
 - [] User Dropdown Peter
-- [] Footer Peter 
+- [x] Footer Peter
 - [] Search Bar Peter
 - [] Login Peter
-- [] Registration Peter
 - [] Main Page Dashboard Willen
 - [] Main Page Stocks Carousel Willen
 - [] Stock Info Willen
@@ -19,9 +18,7 @@
 
 ## Pages To Do
  - [] Home Page (Not Logged In) Willen
- - [] Registration Peter
  - [] Login Peter
- - [] Stock Search Peter
  - [] Logout Peter
  - [] Stock Info Screen Willen
  - [] Stock User Screen Willen
