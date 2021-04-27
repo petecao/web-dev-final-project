@@ -3,12 +3,12 @@
 ## Props To Do
 
 - [x] Header Peter
-- [] User Dropdown Peter
+- [] User Dropdown Peter (Will do with Styling later on (Requires Bootstrap))
 - [x] Footer Peter
 - [] Search Bar Peter
-- [] Login Peter
+- [x] Login Peter
 - [] Main Page Dashboard Willen
-- [] Main Page Stocks Carousel Willen
+- [] Main Page Stocks Carousel Willen (Will do with Styling later on (Requires Bootstrap))
 - [] Stock Info Willen
 - [] Stock Table Willen
 - [] Stock List Willen

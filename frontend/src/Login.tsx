@@ -5,7 +5,7 @@ const Login = () => {
     return(
         <div>
             <div>
-                Login
+                Login to your Stock Explorer account:
             </div>
             <Authenticated>
             </Authenticated>

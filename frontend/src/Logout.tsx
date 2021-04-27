@@ -3,7 +3,7 @@ import React from 'react';
 const Logout = () => {
     return(
         <div>
-            Logout
+            You have successfully logged out.
         </div>
     )
 }
