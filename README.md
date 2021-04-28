@@ -9,11 +9,11 @@
 - [x] Login Peter
 - [] Main Page Dashboard Willen
 - [] Main Page Stocks Carousel Willen (Will do with Styling later on (Requires Bootstrap))
-- [] Stock Info Willen
-- [] Stock Table Willen
-- [] Stock List Willen
-- [] Buy/Sell Stock Willen
-- [] User Table Willen
+- [x] Stock Info Willen
+- [x] Stock Table Willen
+- [x] Stock List Willen
+- [x] Buy/Sell Stock Willen
+- [x] User Table Willen
 - [] Logout Screen Peter
 
 ## Pages To Do
@@ -21,4 +21,4 @@
  - [x] Login Peter
  - [x] Logout Peter
  - [] Stock Info Screen Willen
- - [] Stock User Screen Willen
+ - [x] Stock User Screen Willen
