@@ -5,13 +5,17 @@
   "repository": "https://github.com/petecao/web-dev-final-project.git",
   "author": "Peter Cao <peterspellingbee@gmail.com>",
   "license": "MIT",
-
   "scripts": {
     "server": "cd backend && yarn start",
     "frontend": "cd frontend && yarn start",
     "start": "concurrently \"yarn server\" \"yarn frontend\""
   },
-
   "private": true,
-  "workspaces": ["frontend", "backend"]
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "dependencies": {
+    "firebase": "^8.4.2"
+  }
 }

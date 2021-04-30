@@ -80,18 +80,18 @@ const FilterableStockTable = ({ stocks, callback }: TableProps) => {
   ) : (
     <div>
       <SearchBar
-        filterText={filterText} // states passed as prop to SearchBar
-        favoriteOnly={favoriteOnly} // states passed as prop to SearchBar
-        handleFilterTextChange={handleFilterTextChange} // pass down callbacks to update search state
+        filterText={filterText}
+        favoriteOnly={favoriteOnly}
+        handleFilterTextChange={handleFilterTextChange}
         handleCheckBoxChange={handleCheckBoxChange}
         descending={descending}
         handleCheckBoxChange2={handleCheckBoxChange2}
       />
       <StockSum stocks={currstocks} />
       <StockTable
-        stocks={currstocks} // JSON API model
-        filterText={filterText} // states passed as prop to SearchBar
-        favoriteOnly={favoriteOnly} // states passed as prop to SearchBar
+        stocks={currstocks}
+        filterText={filterText}
+        favoriteOnly={favoriteOnly}
         descending={descending}
         callback={changeStocks}
       />

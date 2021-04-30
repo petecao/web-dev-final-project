@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Router, Switch, useHistory } from 'react-router-dom';
 import Home from './Home';
@@ -15,19 +14,21 @@ import Footer from './Footer';
 function App() {
   return (
     <div className="App">
-      
+
       <BrowserRouter>
-      <Navbar />
-      <Switch>
-          <Route path='/' exact component ={Home} />
-          <Route path='/register' component ={Registration} />
-          <Route path='/login' component ={Login} />
-          <Route path='/logout' component ={Logout} />
-          <Route path='/profile/' component ={Profile} />
-          <Route path='/stock/:stockId' component ={StockInfo} />
+        <Navbar />
+        <Switch>
+          <Route path='/' exact component={Home} />
+          <Route path='/register' component={Registration} />
+          <Route path='/login' component={Login} />
+          <Route path='/logout' component={Logout} />
+          <Route path='/profile/' component={Profile} />
+          <Route path='/stock/:stockId' component={StockInfo} />
           <Route component={PageNotFound} />
-          </Switch>
+        </Switch>
       </BrowserRouter>
+      <br />
+      <br />
       <Footer />
     </div>
   );

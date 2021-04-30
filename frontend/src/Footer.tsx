@@ -4,10 +4,10 @@ const Footer = () => {
     return (
         <div>
             <footer>
-            Made with ❤️ by Peter Cao and Willen Zheng
+                Made with ❤️ by Peter Cao and Willen Zhou
             </footer>
         </div>
-        
+
     )
 }
 
