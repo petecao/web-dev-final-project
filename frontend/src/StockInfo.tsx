@@ -8,7 +8,7 @@ export type StockInfo = {
     readonly num_shares: number
 }
 
-const StockInfo = () => {
+const StockData = () => {
     return (
         <div>
             Stock Information
@@ -18,4 +18,4 @@ const StockInfo = () => {
     )
 }
 
-export default StockInfo;
+export default StockData;

@@ -6,7 +6,7 @@ import Registration from './Registration';
 import Login from './Login';
 import Logout from './Logout';
 import Profile from './Profile';
-import StockInfo from './StockInfo';
+import StockData from './StockInfo';
 import PageNotFound from './PageNotFound';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -23,7 +23,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/logout' component={Logout} />
           <Route path='/profile/' component={Profile} />
-          <Route path='/stock/:stockId' component={StockInfo} />
+          <Route path='/stock/:stockId' component={StockData} />
           <Route component={PageNotFound} />
         </Switch>
       </BrowserRouter>
