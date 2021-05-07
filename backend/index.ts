@@ -40,7 +40,6 @@ type StockWithID = Stock & {
 
 type User = {
   name: string;
-  stocks: StockInfoWithID[];
 };
 
 type UserWithID = User & {
@@ -68,7 +67,7 @@ app.get('/stocks', async (_, res) => {
 // get all stocks for a user given user id
 app.get('/userStocks/:userId', async (req, res) => {
   const user_id = req.params.userId;
-  const stocks = await stocksCollection.doc(user_id as string).collection('stocks').get();
+  const stocks = await usersCollection.doc(user_id as string).collection('stocks').get();
   res.json(
     stocks.docs.map(
       (doc): StockInfoWithID => {
@@ -82,13 +81,33 @@ app.get('/userStocks/:userId', async (req, res) => {
 
 // make a user
 app.post('/createUser', async (req, res) => {
-  admin.auth().verifyIdToken(req.headers.idtoken as string)
-    .then(async () => {
-      const newUser: User = req.body;
-      const addedUser = await usersCollection.add(newUser);
-      res.send(addedUser.id);
-    })
-    .catch(() => res.send('auth error'));
+  // admin.auth().verifyIdToken(req.headers.idtoken as string)
+  //   .then(async () => {
+  //     const newUser: User = req.body;
+  //     const addedUser = await usersCollection.add(newUser);
+  //     res.send(addedUser.id);
+  //   })
+  //   .catch(() => res.send('auth error'));
+  const newUser: User = req.body;
+  const addedUser = await usersCollection.add(newUser);
+  res.send(addedUser.id);
+});
+
+
+// add stocks to user
+app.post('/addStock/:userId', async (req, res) => {
+  // admin.auth().verifyIdToken(req.headers.idtoken as string)
+  //   .then(async () => {
+  //     const newUser: User = req.body;
+  //     const addedUser = await usersCollection.add(newUser);
+  //     res.send(addedUser.id);
+  //   })
+  //   .catch(() => res.send('auth error'));
+  const user_id = req.params.userId;
+  const newStock: StockInfo = req.body;
+  const addedUser = await usersCollection.add(newStock);
+  await usersCollection.doc(user_id as string).collection('stocks').add(newStock);
+  res.send(addedUser.id);
 });
 
 
@@ -100,50 +119,6 @@ app.delete('/deleteStock/:userId/:stockId', async (req, res) => {
   res.send('Stock deleted!');
 });
 
-
-
-
-
-
-// app.get('/userStocks', async (_, res) => {
-//   const users = await usersCollection.orderBy('name').get();
-//   const stockslist = users.docs.map(
-//     (doc) : UserWithID => doc.ref.collection('stocks').get()
-//   )
-
-//   const querySnapshotsArr = Promise.all(stockslist);
-
-//   res.json(
-//     querySnapshotsArr.forEach(querySnapshot => {
-//       querySnapshot.docs.map(
-//         (doc): StockInfoWithID => {
-//           const stock = doc.data() as StockInfo;
-//           return { ...stock, id: doc.id };
-//         }
-//       )
-//     })
-//   );
-// }
-//   user_list: Array<User>[];
-//   user_list = users.docs.map(
-//     (doc): UserWithID => {
-//       const user = doc.data() as User;
-//       return { ...user, id: doc.id };
-//     }
-//   )
-
-//   res.json(
-
-//         user.stocks.map(
-//           (doc): StockInfoWithID => {
-//             const stock = doc.data() as StockInfo;
-//             return { ...stock, id: doc.id };
-//           }
-//         )
-//       }
-//     )
-//   );
-// });
 
 
 
