@@ -2,6 +2,7 @@ import admin from 'firebase-admin';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import key from "./key";
 
 const serviceAccount = require('../service-account.json');
 
@@ -100,10 +101,107 @@ app.delete('/deleteStock/:userId/:stockId', async (req, res) => {
   res.send('Stock deleted!');
 });
 
+app.post('/updatestocks/:userid/:stockId', async (req, res) => {
+  const user_id = req.params.userId;
+  const stock_id = req.params.stockId;
+  const bodyName =req.body.name;
+  await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).get()
+    .then((stock) => {
+      const name = stock.get('name');
+      const https = require('https');
+      const baseOne = 'https://cloud.iexapis.com/v1/stock/'
+      const baseTwo = '/quote/latestPrice'
+      https.get(baseOne + name + baseTwo + '?token=' + key, (resp) => {
+        let data = '';
 
+        // A chunk of data has been received.
+        resp.on('data', (chunk) => {
+          data += chunk;
+        });
 
+        // The whole response has been received. Print out the result.
+        resp.on('end', async () => {
+          let price: number = JSON.parse(data);
+          await stocksCollection.doc(stock_id as string).update({price: price});
+          await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).update({price: price});
+          res.send('updated');
+        });
+      })
+    })
+    .catch(() => {
+      const https = require('https');
+      const baseOne = 'https://cloud.iexapis.com/v1/stock/'
+      const baseTwo = '/quote/latestPrice'
+      https.get(baseOne + bodyName + baseTwo + '?token=' + key, (resp) => {
+        let data = '';
 
+        // A chunk of data has been received.
+        resp.on('data', (chunk) => {
+          data += chunk;
+        });
 
+        // The whole response has been received. Print out the result.
+        resp.on('end', async () => {
+          let price = JSON.parse(data);
+          await stocksCollection.doc(stock_id as string).update({price: price});
+          const stockDoc = usersCollection.doc(user_id as string).collection('stocks').doc()
+          await stockDoc.set({
+            name: bodyName,
+            price: price,
+            favorite: false,
+            num_shares: 0
+          })
+          const bigStock = await stocksCollection.doc(stock_id as string).get()
+          if (bigStock) {
+            await stocksCollection.doc(stock_id as string).update({price: price})
+          } else {
+            const newStock = stocksCollection.doc()
+            await newStock.set({
+              name: bodyName,
+              price: price
+            })
+          }
+          res.send('new stock added');
+        });
+      })
+    })
+  });
+
+app.post('/userstocks/:userid/:stockid', async (req, res) => {
+
+})
+
+app.post('/transaction/:userId/:stockid', async (req, res) => {
+  const user_id = req.params.userId;
+  const stock_id = req.params.stockId;
+  let type: string = req.query.type as string;
+  if (type.toLowerCase() !== 'buy' && type.toLowerCase() !== 'sell') {
+    res.send('invalid query');
+    return;
+  }
+  const shares: number = await (await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).get()).get('num_shares').catch(() => {
+    res.send("Stock or user not found");
+    return;});
+  if (type.toLowerCase() === 'buy') {
+    await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).update({num_shares: shares + 1});
+    res.send('updated!')
+  } else {
+    if (shares < 1) {
+      res.send('Not enough shares to sell!');
+    } else {
+      await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).update({num_shares: shares - 1});
+      res.send('updated!')
+    }
+  }
+})
+
+app.post('/favorite/:userId/:stockid', async (req, res) => {
+  const user_id = req.params.userId;
+  const stock_id = req.params.stockId;
+  const favorite: boolean = await (await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).get()).get('favorite');
+  await usersCollection.doc(user_id as string).collection('stocks').doc(stock_id as string).update({favorite: !favorite});
+  res.send("updated!");
+})
 
 // app.get('/userStocks', async (_, res) => {
 //   const users = await usersCollection.orderBy('name').get();
