@@ -60,13 +60,6 @@ app.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function
 }));
 // add stocks to user
 app.post('/addStock/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // admin.auth().verifyIdToken(req.headers.idtoken as string)
-    //   .then(async () => {
-    //     const newUser: User = req.body;
-    //     const addedUser = await usersCollection.add(newUser);
-    //     res.send(addedUser.id);
-    //   })
-    //   .catch(() => res.send('auth error'));
     const user_id = req.params.userId;
     const newStock = req.body;
     const addedUser = yield usersCollection.add(newStock);

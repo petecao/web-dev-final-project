@@ -96,13 +96,6 @@ app.post('/createUser', async (req, res) => {
 
 // add stocks to user
 app.post('/addStock/:userId', async (req, res) => {
-  // admin.auth().verifyIdToken(req.headers.idtoken as string)
-  //   .then(async () => {
-  //     const newUser: User = req.body;
-  //     const addedUser = await usersCollection.add(newUser);
-  //     res.send(addedUser.id);
-  //   })
-  //   .catch(() => res.send('auth error'));
   const user_id = req.params.userId;
   const newStock: StockInfo = req.body;
   const addedUser = await usersCollection.add(newStock);
