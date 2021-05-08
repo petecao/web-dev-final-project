@@ -98,9 +98,8 @@ app.post('/createUser', async (req, res) => {
 app.post('/addStock/:userId', async (req, res) => {
   const user_id = req.params.userId;
   const newStock: StockInfo = req.body;
-  const addedUser = await usersCollection.add(newStock);
   await usersCollection.doc(user_id as string).collection('stocks').add(newStock);
-  res.send(addedUser.id);
+  res.send(user_id);
 });
 
 

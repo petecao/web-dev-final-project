@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
+// import cors from 'cors';
 const path_1 = __importDefault(require("path"));
 const serviceAccount = require('../service-account.json');
 firebase_admin_1.default.initializeApp({
@@ -22,7 +22,7 @@ firebase_admin_1.default.initializeApp({
 });
 const db = firebase_admin_1.default.firestore();
 const app = express_1.default();
-app.use(cors_1.default());
+// app.use(cors());
 app.use(express_1.default.static(path_1.default.join(__dirname, '../frontend/build')));
 const port = 8080;
 app.use(express_1.default.json());
@@ -62,9 +62,8 @@ app.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function
 app.post('/addStock/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user_id = req.params.userId;
     const newStock = req.body;
-    const addedUser = yield usersCollection.add(newStock);
     yield usersCollection.doc(user_id).collection('stocks').add(newStock);
-    res.send(addedUser.id);
+    res.send(user_id);
 }));
 // delete a stock given user id and stock id
 app.delete('/deleteStock/:userId/:stockId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
