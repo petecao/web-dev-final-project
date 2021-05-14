@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react"
+import { ReactElement, useEffect, useState } from "react"
 import { StockInfo } from './StockInfo';
 
 type StockRowProps = {
@@ -6,7 +6,6 @@ type StockRowProps = {
 };
 
 const StockRow = ({ stock }: StockRowProps) => {
-
   return (
     <tr>
       <td>{stock.name}</td>
@@ -15,11 +14,17 @@ const StockRow = ({ stock }: StockRowProps) => {
   );
 };
 
-type Props = {
-  readonly stocks: StockInfo[];
-}
+const HomeTable = () => {
+  const [stocks, setStocks] = useState<StockInfo[]>([]);
 
-const HomeTable = ({ stocks }: Props) => {
+  useEffect(() => {
+    fetch('/stocks/')
+      .then(res => res.json())
+      .then(data => {
+        setStocks(data);
+      })
+  }, [stocks])
+
   const rows: ReactElement[] = [];
   stocks.forEach((stock) => {
     rows.push(<StockRow key={stock.name} stock={stock} />);

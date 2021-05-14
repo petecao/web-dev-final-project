@@ -1,7 +1,7 @@
 import { StockInfo } from './StockInfo';
 
 type SumProps = {
-  readonly stocks: StockInfo[]
+  readonly stocks: StockInfo[];
 }
 
 const StockSum = (stocks: SumProps) => {

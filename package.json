@@ -16,6 +16,8 @@
     "backend"
   ],
   "dependencies": {
+    "bootstrap": "^5.0.1",
+    "concurrently": "^6.1.0",
     "firebase": "^8.4.2"
   }
 }

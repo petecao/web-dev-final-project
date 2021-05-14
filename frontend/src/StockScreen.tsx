@@ -1,25 +1,40 @@
-import { useState } from 'react';
-import { StockInfo } from './StockInfo';
+import { useEffect, useState } from 'react';
+import { StockInfo, Stock } from './StockInfo';
 import FavoriteStock from './FavoriteStock';
+import firebase from 'firebase';
 
-const StockScreen = (stock: StockInfo) => {
-  const [currstock, setCurrstock] = useState<StockInfo>(stock);
+type Props = {
+  readonly stock: Stock,
+}
 
-  const changeStock = (s: StockInfo) => {
-    setCurrstock(s);
+const StockScreen = ({ stock }: Props) => {
+  // const [currstock, setCurrstock] = useState<StockInfo>(stock);
+
+  // const changeStock = (s: StockInfo) => {
+  //   setCurrstock(s);
+  // }
+
+  // const name = stock.favorite ? (
+  //   stock.name
+  // ) : (
+  //   <span style={{ color: 'red' }}>{stock.name}</span>
+  // );
+
+  const addStock = (stock: Stock) => {
+    fetch(`/userstocks/${firebase.auth().currentUser?.getIdToken}?name=${stock.name}`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
   }
 
-  const name = stock.favorite ? (
-    stock.name
-  ) : (
-    <span style={{ color: 'red' }}>{stock.name}</span>
-  );
 
   return (
     <div>
-      Name: {name}
+      Name: {stock.name}
       Price: {stock.price}
-      <FavoriteStock stock={currstock} callback={changeStock} />
+      <button onClick={() => addStock(stock)} > Add to Profile </button >
     </div>
   )
 }

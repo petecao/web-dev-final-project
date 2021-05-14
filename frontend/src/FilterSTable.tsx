@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { StockInfo } from './StockInfo';
 import StockTable from './STable';
 import StockSum from './StockSum';
+import firebase from 'firebase';
 
 type SearchProps = {
   readonly filterText: string;
@@ -57,6 +58,14 @@ const FilterableStockTable = ({ stocks, callback }: TableProps) => {
   const [favoriteOnly, setFavoriteOnly] = useState(false);
   const [loading, setLoading] = useState(false);
   const [descending, setDescending] = useState(false);
+
+  useEffect(() => {
+    fetch(`/userStocks/${firebase.auth().currentUser?.getIdToken}`)
+      .then(res => res.json())
+      .then(data => {
+        setCurrstocks(data);
+      })
+  }, [currstocks])
 
   const changeStocks = (ss: StockInfo[]) => {
     setCurrstocks(ss);

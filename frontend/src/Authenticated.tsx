@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import firebaseConfig from './firebaseConfig';
 
-  // Initialize Firebase
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 type Props = {
@@ -13,14 +13,14 @@ type Props = {
 }
 
 
-const Authenticated = ({children}: Props) => {
+const Authenticated = ({ children }: Props) => {
     const [user, setUser] = useState<firebase.User | null>(null);
 
     const onAuthStateChange = () => {
-    return firebase.auth().onAuthStateChanged((user) => {
-        setUser(user);
-    })
-}
+        return firebase.auth().onAuthStateChanged((user) => {
+            setUser(user);
+        })
+    }
 
     useEffect(() => onAuthStateChange(), [])
 
@@ -41,4 +41,4 @@ const Authenticated = ({children}: Props) => {
 
 
 
-export {Authenticated};
+export { Authenticated };

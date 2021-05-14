@@ -1,8 +1,9 @@
 import { ReactElement, useState } from "react"
 import { StockInfo } from './StockInfo';
-import AddStock from './AddStock';
+import BuyStock from './BuyStock';
 import FavoriteStock from './FavoriteStock';
 import SellStock from "./SellStock";
+import firebase from "firebase";
 
 type StockRowProps = {
   readonly stock: StockInfo;
@@ -13,6 +14,7 @@ type StockRowProps = {
 const StockRow = ({ stock, stocks, callback }: StockRowProps) => {
   const [currstock, setCurrstock] = useState<StockInfo>(stock);
   const [currstocks, setCurrstocks] = useState<StockInfo[]>(stocks);
+  const [sum, setSum] = useState(0);
 
   const changeStock = (s: StockInfo) => {
     callback(currstocks);
@@ -33,8 +35,13 @@ const StockRow = ({ stock, stocks, callback }: StockRowProps) => {
 
     // set sum in here, so every time you add or subtract you know, then callback to 
     // stock table, where the sum resides and directly pass in a number
+    let sumFunct = function (a: number, b: number) {
+      return a + b;
+    }
 
-
+    currstocks.forEach(function (stock) {
+      setSum(sumFunct(sum, (parseFloat((stock.price * stock.num_shares).toFixed(2)))));
+    })
 
   }
   const name = currstock.favorite ? (
@@ -42,16 +49,31 @@ const StockRow = ({ stock, stocks, callback }: StockRowProps) => {
   ) : (
     <span style={{ color: 'red' }}>{currstock.name}</span>
   );
+
+  const deleteStock = () => {
+    fetch(`/deleteStock/${firebase.auth().currentUser?.getIdToken}?name=${stock.name}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+  };
+
   return (
-    <tr>
-      <td>{name}</td>
-      <td>{currstock.price}</td>
-      <td>{currstock.num_shares}</td>
-      <td>{parseFloat((currstock.price * currstock.num_shares).toFixed(2))}</td>
-      <td><AddStock stock={currstock} callback={changeStock} /></td>
-      <td><SellStock stock={currstock} callback={changeStock} /></td>
-      <td><FavoriteStock stock={currstock} callback={changeStock} /></td>
-    </tr>
+    <div>
+      <label > Total Holdings = {parseFloat(sum.toFixed(2))} </label>
+      <tr>
+        <td>{name}</td>
+        <td>{currstock.price}</td>
+        <td>{currstock.num_shares}</td>
+        <td>{parseFloat((currstock.price * currstock.num_shares).toFixed(2))}</td>
+        <td><BuyStock stock={currstock} callback={changeStock} /></td>
+        <td><SellStock stock={currstock} callback={changeStock} /></td>
+        <td><FavoriteStock stock={currstock} callback={changeStock} /></td>
+        <td> <button onClick={() => deleteStock()}>delete</button> </td>
+      </tr>
+    </div>
+
   );
 };
 
