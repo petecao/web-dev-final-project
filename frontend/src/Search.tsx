@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import  { useHistory } from 'react-router'
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button'
 
 
 
@@ -17,7 +18,7 @@ const Search = () => {
             value={query}
             onChange={(e) => changeQuery(e.target.value)}
             />
-            <button type="submit">Go</button>
+            <Button variant="secondary" type="submit">Go</Button>
             </form>
         </span>
         

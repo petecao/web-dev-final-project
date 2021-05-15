@@ -32,8 +32,8 @@ const StockScreen = ({ stock }: Props) => {
 
   return (
     <div>
-      Name: {stock.name}
-      Price: {stock.price}
+      <p>Name: {stock.name}</p>
+      <p>Price: {stock.price}</p>
       <button onClick={() => addStock(stock)} > Add to Profile </button >
     </div>
   )

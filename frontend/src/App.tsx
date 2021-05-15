@@ -10,6 +10,7 @@ import PageNotFound from './PageNotFound';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import StockInfo from './StockInfo';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   return (
