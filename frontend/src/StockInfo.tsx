@@ -14,15 +14,15 @@ export type Stock = {
     readonly name: string,
     readonly price: number
 };
+type Param = {
+    stockId: string
+}
+const StockInfo = () => {
 
-const StockData = () => {
-
-    const [currstock, setCurrstock] = useState<Stock>();
-
-    const history = useHistory();
-    let location = useLocation();
-    let { stockid } : any = useParams();
-    fetch(`http://localhost:8080/stock?name=${stockid}`, {
+    const [currstock, setCurrstock] = useState<Stock>({name: "Stock Not Found", price: 0.00} as Stock);
+    const params: Param = useParams();
+    useEffect(() => {
+    fetch(`/stock?name=${params.stockId}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -31,7 +31,7 @@ const StockData = () => {
             .then((response) =>
                 response.json())
             .then((d) => setCurrstock(d));
-
+    }, [params])
 
 
     // useEffect(() => {
@@ -42,13 +42,13 @@ const StockData = () => {
     //       })
     //   }, [currstocks])
 
+    console.log(params)
     return (
         <div>
             Stock Information
-            <StockScreen stock={currstock ?? { name: "N/A", price: 0 }} />
-
+            <StockScreen stock={currstock} />
         </div>
     )
 }
 
-export default StockData;
+export default StockInfo;

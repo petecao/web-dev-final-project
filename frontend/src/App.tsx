@@ -6,10 +6,10 @@ import Registration from './Registration';
 import Login from './Login';
 import Logout from './Logout';
 import Profile from './Profile';
-import StockData from './StockInfo';
 import PageNotFound from './PageNotFound';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import StockInfo from './StockInfo';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/logout' component={Logout} />
           <Route path='/profile/' component={Profile} />
-          <Route path='/stock/:stockId' component={StockData} />
+          <Route exact path='/stock/:stockId/' component={StockInfo} />
           <Route component={PageNotFound} />
         </Switch>
       </BrowserRouter>
