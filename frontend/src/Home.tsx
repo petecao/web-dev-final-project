@@ -4,7 +4,7 @@ import HomeTable from './HomeTable'
 const Home = () => {
     return (
         <div>
-            Home
+            <h1 className="display-6">Home</h1>
             <br />
             <HomeTable />
         </div>

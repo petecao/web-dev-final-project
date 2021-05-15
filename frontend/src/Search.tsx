@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import  { useHistory } from 'react-router'
 import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button'
+import {Button, Form, FormControl} from 'react-bootstrap'
 
 
 
@@ -11,15 +11,15 @@ const Search = () => {
 
     return(
         <span>
-            <form onSubmit={() => history.push(`/stock/${query}`)}>
-            <input 
+            <Form inline onSubmit={() => history.push(`/stock/${query}`)}>
+            <FormControl 
             type="text"
             placeholder="Search"
             value={query}
             onChange={(e) => changeQuery(e.target.value)}
             />
             <Button variant="secondary" type="submit">Go</Button>
-            </form>
+            </Form>
         </span>
         
     )

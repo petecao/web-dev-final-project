@@ -45,7 +45,6 @@ const StockInfo = () => {
     console.log(params)
     return (
         <div>
-            Stock Information
             <StockScreen stock={currstock} />
         </div>
     )

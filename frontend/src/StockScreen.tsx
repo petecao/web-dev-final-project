@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { StockInfo, Stock } from './StockInfo';
 import FavoriteStock from './FavoriteStock';
 import firebase from 'firebase';
+import { Button, Table } from 'react-bootstrap';
 
 type Props = {
   readonly stock: Stock,
@@ -32,9 +33,18 @@ const StockScreen = ({ stock }: Props) => {
 
   return (
     <div>
-      <p>Name: {stock.name}</p>
-      <p>Price: {stock.price}</p>
-      <button onClick={() => addStock(stock)} > Add to Profile </button >
+      <h1 className="display-6">Info for {stock.name}</h1>
+      <Table responsive striped bordered hover>
+        <thead>
+          <th>Name</th>
+          <th>Price</th>
+        </thead>
+        <tbody>
+          <td>{stock.name}</td>
+          <td>{stock.price}</td>
+        </tbody>
+      </Table>
+      <Button variant="primary" onClick={() => addStock(stock)} > Add to Profile </Button >
     </div>
   )
 }

@@ -35,7 +35,7 @@ const Profile = () => {
     const [stocks, setStocks] = useState<StockInfo[]>(STOCKS);
     return(
         <div>
-            Profile
+            <h1 className="display-6">Profile</h1>
             <br />
             <FilterableStockTable stocks={stocks} callback={setStocks} />
         </div>
