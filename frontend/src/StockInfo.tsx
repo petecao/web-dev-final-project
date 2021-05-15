@@ -22,7 +22,7 @@ const StockInfo = () => {
     const [currstock, setCurrstock] = useState<Stock>({name: "Stock Not Found", price: 0.00} as Stock);
     const params: Param = useParams();
     useEffect(() => {
-    fetch(`/stock?name=${params.stockId}`, {
+    fetch(`/stock?name=${params.stockId.toUpperCase()}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
