@@ -3,6 +3,7 @@ import { StockInfo } from './StockInfo';
 import StockTable from './STable';
 import StockSum from './StockSum';
 import firebase from 'firebase';
+import { Form } from 'react-bootstrap';
 
 type SearchProps = {
   readonly filterText: string;
@@ -21,30 +22,26 @@ const SearchBar = ({
   descending,
   handleCheckBoxChange2,
 }: SearchProps) => (
-  <form>
-    <input
+  <Form inline className="justify-content-center">
+    <Form.Control
       type="text"
       placeholder="search here"
       value={filterText}
       onChange={handleFilterTextChange}
     />
-    <p>
-      <input
+      <Form.Check inline
         type="checkbox"
         checked={favoriteOnly}
         onChange={handleCheckBoxChange}
+        label="Only show watching stocks"
       />
-      Only show watching stocks
-    </p>
-    <p>
-      <input
+      <Form.Check inline
         type="checkbox"
         checked={descending}
         onChange={handleCheckBoxChange2}
+        label="Sort by descending holdings in $"
       />
-      Sort by descending holdings in $
-    </p>
-  </form>
+  </Form>
 );
 
 type TableProps = {

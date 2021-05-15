@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <Container >
             <footer className="page-footer fixed-bottom" >
-                Made with ❤️ by Peter Cao and Willen Zhou
+                Made with ❤️ by Peter Cao and Willen Zhou ©2021 All Rights Reserved
             </footer>
         </Container>
 

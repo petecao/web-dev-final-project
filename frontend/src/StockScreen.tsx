@@ -34,7 +34,7 @@ const StockScreen = ({ stock }: Props) => {
   return (
     <div>
       <h1 className="display-6">Info for {stock.name}</h1>
-      <Table responsive striped bordered hover>
+      <Table responsive="sm" striped bordered hover>
         <thead>
           <th>Name</th>
           <th>Price</th>

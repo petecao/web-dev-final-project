@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from "react"
+import { Table } from "react-bootstrap";
 import { StockInfo } from './StockInfo';
 
 type StockRowProps = {
@@ -32,13 +33,13 @@ const HomeTable = () => {
 
   return (
     <div>
-      <table>
+      <Table responsive="sm" striped bordered hover>
         <thead>
           <th>Name</th>
           <th>Price</th>
         </thead>
         <tbody>{rows}</tbody>
-      </table>
+      </Table>
     </div>
 
   )

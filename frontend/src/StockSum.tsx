@@ -15,7 +15,7 @@ const StockSum = (stocks: SumProps) => {
   })
   return (
     <div>
-      <label > Total Holdings = {parseFloat(sum.toFixed(2))} </label>
+      <h4 > Total Holdings = {parseFloat(sum.toFixed(2))} </h4>
     </div>
   )
 }
