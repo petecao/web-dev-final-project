@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import StockScreen from './StockScreen';
 import { useHistory } from 'react-router'
+import { useLocation, useParams } from 'react-router-dom';
 
 export type StockInfo = {
     readonly name: string,
@@ -19,9 +20,9 @@ const StockData = () => {
     const [currstock, setCurrstock] = useState<Stock>();
 
     const history = useHistory();
-
-    useEffect(() => {
-        fetch(history.location.pathname, {
+    let location = useLocation();
+    let { stockid } : any = useParams();
+    fetch(`http://localhost:8080/stock?name=${stockid}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -30,7 +31,6 @@ const StockData = () => {
             .then((response) =>
                 response.json())
             .then((d) => setCurrstock(d));
-    }, [currstock, history])
 
 
 
