@@ -8,7 +8,8 @@
   "scripts": {
     "server": "cd backend && yarn start",
     "frontend": "cd frontend && yarn start",
-    "start": "concurrently \"yarn server\" \"yarn frontend\""
+    "start": "concurrently \"yarn server\" \"yarn frontend\"",
+    "heroku-postbuild": "yarn workspaces run build"
   },
   "private": true,
   "workspaces": [
@@ -18,6 +19,7 @@
   "dependencies": {
     "bootstrap": "^5.0.1",
     "concurrently": "^6.1.0",
-    "firebase": "^8.4.2"
+    "firebase": "^8.4.2",
+    "heroku": "^7.52.0"
   }
 }
