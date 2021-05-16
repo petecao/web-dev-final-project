@@ -19,6 +19,19 @@ const Authenticated = ({ children }: Props) => {
     const onAuthStateChange = () => {
         return firebase.auth().onAuthStateChanged((user) => {
             setUser(user);
+            if (user) {
+                // let uid = user?.getIdToken;
+                // firebase.database().ref('users/' + uid).set({
+                //     name: user.displayName
+                // })
+                fetch(`/createUser?name=${user.displayName as string}?userId=${user?.getIdToken}`, {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                    },
+                })
+            }
+
         })
     }
 

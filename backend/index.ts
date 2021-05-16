@@ -43,7 +43,7 @@ type StockWithID = Stock & {
 
 type User = {
   name: string;
-  stocks: StockInfo[]
+  // firebase_id: string;
 };
 
 type UserWithID = User & {
@@ -95,9 +95,19 @@ app.post('/createUser', async (req, res) => {
   //     res.send(addedUser.id);
   //   })
   //   .catch(() => res.send('auth error'));
-  const newUser: User = req.body;
-  const addedUser = await usersCollection.add(newUser);
-  res.send(addedUser.id);
+  // const newUser: User = req.body;
+  // const addedUser = await usersCollection.add(newUser);
+  // res.send(addedUser.id);
+  const name = req.query.name as string;
+  const user_id = req.query.userId as string;
+  // const user_id: string = req.body;
+  await usersCollection.doc(user_id as string).set({ name: name })
+  // .then(() => {
+  //   console.log("Document successfully written!");
+  // })
+  // .catch((error) => {
+  //   console.error("Error writing document: ", error);
+  // });
 });
 
 
@@ -109,7 +119,7 @@ app.post('/userstocks/:userid', async (req, res) => {
     res.send('User not found!')
   } else {
     const matchingStocks = await usersCollection.doc(user_id as string).collection('stocks').where('name', '==', name).get()
-    
+
     if (matchingStocks.empty) {
       let userStock: StockInfo = {
         name: name,
@@ -123,38 +133,38 @@ app.post('/userstocks/:userid', async (req, res) => {
           'content-type': 'application/json'
         }
       })
-      .then((res: { json: () => any; }) => res.json())
-      .then(async (data: Stock) => {
-        if (!(data.price)) {
-          res.send('Invalid stock')
-        } else {
-        userStock.price = data.price;
-        await usersCollection.doc(user_id as string).collection('stocks').add(userStock);
-        res.send(userStock);
-      }
-      })
-      .catch(() => res.send('Invalid stock'))
+        .then((res: { json: () => any; }) => res.json())
+        .then(async (data: Stock) => {
+          if (!(data.price)) {
+            res.send('Invalid stock')
+          } else {
+            userStock.price = data.price;
+            await usersCollection.doc(user_id as string).collection('stocks').add(userStock);
+            res.send(userStock);
+          }
+        })
+        .catch(() => res.send('Invalid stock'))
     } else {
       matchingStocks.forEach(doc => {
         fetch('http://localhost:8080/stock?name=' + name, {
-        method: "POST",
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
-      .then((res: { json: () => any; }) => res.json())
-      .then(async (data: Stock) => {
-        if (!(data.price)) {
-          res.send('Invalid stock')
-        } else {
-          await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({price: data.price});;
-          res.send("Stock updated")
+          method: "POST",
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+          .then((res: { json: () => any; }) => res.json())
+          .then(async (data: Stock) => {
+            if (!(data.price)) {
+              res.send('Invalid stock')
+            } else {
+              await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({ price: data.price });;
+              res.send("Stock updated")
+            }
+          })
+          .catch(() => res.send('Invalid stock'))
       }
-      })
-      .catch(() => res.send('Invalid stock'))
-    }
       )
-      
+
     }
   }
 })
@@ -180,22 +190,22 @@ app.post('/transaction/:userId', async (req, res) => {
       matchingStocks.forEach(async doc => {
         shares = doc.get('num_shares')
         if (type.toLowerCase() === 'buy') {
-          await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({num_shares: shares + numShares});
+          await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({ num_shares: shares + numShares });
           res.send('updated!')
         } else {
           if (shares < numShares) {
             res.send('Not enough shares to sell!');
           } else {
-            await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({num_shares: shares - numShares});
+            await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({ num_shares: shares - numShares });
             res.send('updated!')
           }
         }
       })
-      
+
     }
-    
+
   }
-  
+
 })
 
 app.post('/stock', async (req, res) => {
@@ -205,45 +215,45 @@ app.post('/stock', async (req, res) => {
     fetch(base + name + baseMethod + '?token=' + key, {
       method: "GET",
       headers: {
-          'content-type': 'application/json'
+        'content-type': 'application/json'
       }
     })
-    .then((result: { text: () => any; }) => result.text())
-    .then(async (data: any) => {
+      .then((result: { text: () => any; }) => result.text())
+      .then(async (data: any) => {
         if (data === 'Unknown symbol' || data === "Not found") {
-            res.send("Invalid stock!")
+          res.send("Invalid stock!")
         } else {
           const stock: Stock = {
-            name: name, 
+            name: name,
             price: data
           }
           await stocksCollection.add(stock);
           res.send(stock);
         }
-    })
+      })
   } else {
     matchingStocks.forEach(doc => {
       fetch(base + name + baseMethod + '?token=' + key, {
         method: "GET",
         headers: {
-            'content-type': 'application/json'
+          'content-type': 'application/json'
         }
       })
-      .then((result: { text: () => any; }) => result.text())
-      .then(async (data: any) => {
+        .then((result: { text: () => any; }) => result.text())
+        .then(async (data: any) => {
           if (data === 'Unknown symbol' || data === "Not found") {
-              res.send("Invalid stock!")
+            res.send("Invalid stock!")
           } else {
             const stock: Stock = {
-              name: name, 
+              name: name,
               price: data
             }
             await stocksCollection.doc(doc.id).update(stock);
             res.send(stock);
           }
-      })
+        })
     })
-    
+
   }
   // 
   // 
@@ -263,10 +273,10 @@ app.post('/favorite/:userId', async (req, res) => {
     } else {
       matchingStocks.forEach(async doc => {
         favorite = doc.get('favorite')
-        await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({favorite: !favorite});
+        await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).update({ favorite: !favorite });
         res.send("updated!");
-      }) 
-    } 
+      })
+    }
   }
 })
 
@@ -285,8 +295,8 @@ app.delete('/deleteStock/:userId', async (req, res) => {
       matchingStocks.forEach(async doc => {
         await usersCollection.doc(user_id as string).collection('stocks').doc(doc.id).delete();
         res.send("Stock deleted!");
-      }) 
-    } 
+      })
+    }
   }
 });
 

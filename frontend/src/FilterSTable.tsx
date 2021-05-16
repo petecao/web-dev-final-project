@@ -3,7 +3,7 @@ import { StockInfo } from './StockInfo';
 import StockTable from './STable';
 import StockSum from './StockSum';
 import firebase from 'firebase';
-import { Form } from 'react-bootstrap';
+import { Form, Spinner } from 'react-bootstrap';
 
 type SearchProps = {
   readonly filterText: string;
@@ -29,18 +29,18 @@ const SearchBar = ({
       value={filterText}
       onChange={handleFilterTextChange}
     />
-      <Form.Check inline
-        type="checkbox"
-        checked={favoriteOnly}
-        onChange={handleCheckBoxChange}
-        label="Only show watching stocks"
-      />
-      <Form.Check inline
-        type="checkbox"
-        checked={descending}
-        onChange={handleCheckBoxChange2}
-        label="Sort by descending holdings in $"
-      />
+    <Form.Check inline
+      type="checkbox"
+      checked={favoriteOnly}
+      onChange={handleCheckBoxChange}
+      label="Only show watching stocks"
+    />
+    <Form.Check inline
+      type="checkbox"
+      checked={descending}
+      onChange={handleCheckBoxChange2}
+      label="Sort by descending holdings in $"
+    />
   </Form>
 );
 
@@ -82,7 +82,7 @@ const FilterableStockTable = ({ stocks, callback }: TableProps) => {
   }, [favoriteOnly, descending]);
 
   return loading ? (
-    <div>loading</div>
+    <Spinner animation="border" variant="primary" />
   ) : (
     <div>
       <SearchBar

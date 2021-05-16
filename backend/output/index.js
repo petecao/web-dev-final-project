@@ -58,9 +58,19 @@ app.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function
     //     res.send(addedUser.id);
     //   })
     //   .catch(() => res.send('auth error'));
-    const newUser = req.body;
-    const addedUser = yield usersCollection.add(newUser);
-    res.send(addedUser.id);
+    // const newUser: User = req.body;
+    // const addedUser = await usersCollection.add(newUser);
+    // res.send(addedUser.id);
+    const name = req.query.name;
+    const user_id = req.query.userId;
+    // const user_id: string = req.body;
+    yield usersCollection.doc(user_id).set({ name: name });
+    // .then(() => {
+    //   console.log("Document successfully written!");
+    // })
+    // .catch((error) => {
+    //   console.error("Error writing document: ", error);
+    // });
 }));
 app.post('/userstocks/:userid', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user_id = req.params.userid;
