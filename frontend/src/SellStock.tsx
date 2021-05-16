@@ -1,6 +1,7 @@
 import { StockInfo } from './StockInfo';
 import React from 'react';
 import firebase from 'firebase';
+import { Button } from 'react-bootstrap';
 
 type Props = {
   readonly stock: StockInfo,
@@ -28,7 +29,7 @@ const SellStock = ({ stock, callback }: Props) => {
 
   }
   return (
-    <button onClick={() => sellStock(stock)} > Sell one share </button >
+    <Button variant="secondary" onClick={() => sellStock(stock)} > Sell one share </Button >
   )
 }
 

@@ -4,6 +4,7 @@ import BuyStock from './BuyStock';
 import FavoriteStock from './FavoriteStock';
 import SellStock from "./SellStock";
 import firebase from "firebase";
+import { Button, Table } from "react-bootstrap";
 
 type StockRowProps = {
   readonly stock: StockInfo;
@@ -60,8 +61,6 @@ const StockRow = ({ stock, stocks, callback }: StockRowProps) => {
   };
 
   return (
-    <div>
-      <label > Total Holdings = {parseFloat(sum.toFixed(2))} </label>
       <tr>
         <td>{name}</td>
         <td>{currstock.price}</td>
@@ -70,9 +69,8 @@ const StockRow = ({ stock, stocks, callback }: StockRowProps) => {
         <td><BuyStock stock={currstock} callback={changeStock} /></td>
         <td><SellStock stock={currstock} callback={changeStock} /></td>
         <td><FavoriteStock stock={currstock} callback={changeStock} /></td>
-        <td> <button onClick={() => deleteStock()}>delete</button> </td>
+        <td> <Button variant="danger" onClick={() => deleteStock()}>delete</Button> </td>
       </tr>
-    </div>
 
   );
 };
@@ -114,15 +112,19 @@ const StockTable = ({ stocks, filterText, favoriteOnly, descending, callback }: 
 
   return (
     <div>
-      <table>
+      <Table responsive="sm" striped bordered hover>
         <thead>
           <th>Name</th>
           <th>Price</th>
           <th>Holdings (# shares)</th>
           <th>Holdings ($)</th>
+          <th>Buy Stocks</th>
+          <th>Sell Stocks</th>
+          <th>Watch/Unwatch Stocks</th>
+          <th>Delete Stocks from List</th>
         </thead>
         <tbody>{rows}</tbody>
-      </table>
+      </Table>
     </div>
 
   )

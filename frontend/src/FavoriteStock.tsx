@@ -1,6 +1,7 @@
 import { StockInfo } from './StockInfo';
 import React from 'react';
 import firebase from 'firebase';
+import { Button } from 'react-bootstrap';
 
 type Props = {
   readonly stock: StockInfo,
@@ -21,7 +22,7 @@ const FavoriteStock = ({ stock, callback }: Props) => {
     callback({ name: name, price: price, favorite: !favorite, num_shares: num_shares });
   }
   return (
-    <button onClick={() => favoriteStock(stock)} > Watch/Unwatch </button >
+    <Button variant="success" onClick={() => favoriteStock(stock)} > Watch/Unwatch </Button >
   )
 }
 
