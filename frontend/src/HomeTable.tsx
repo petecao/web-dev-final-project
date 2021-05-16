@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react"
-import { Table } from "react-bootstrap";
+import { Carousel, Table } from "react-bootstrap";
 import { StockInfo } from './StockInfo';
 
 type StockRowProps = {
@@ -30,9 +30,23 @@ const HomeTable = () => {
   stocks.forEach((stock) => {
     rows.push(<StockRow key={stock.name} stock={stock} />);
   })
-
+  const numToShow = Math.min(5, stocks.length)
+  const cards: ReactElement[] = []
+  stocks.slice(0, numToShow).forEach((stock) => {
+    cards.push(
+      <Carousel.Item>
+        <Carousel.Caption>
+          <h3>{stock.name}</h3>
+          <p>{stock.price}</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    )
+  })
   return (
     <div>
+      <Carousel>
+      {cards}
+      </Carousel>
       <Table responsive="sm" striped bordered hover>
         <thead>
           <th>Name</th>
