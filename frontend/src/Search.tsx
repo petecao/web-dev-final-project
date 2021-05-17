@@ -14,7 +14,7 @@ const Search = () => {
             <Form inline onSubmit={() => history.push(`/stock/${query}`)}>
             <FormControl 
             type="text"
-            placeholder="Search"
+            placeholder="Search for a stock"
             value={query}
             onChange={(e) => changeQuery(e.target.value)}
             />
